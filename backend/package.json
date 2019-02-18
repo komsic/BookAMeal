@@ -22,5 +22,9 @@
   "homepage": "https://github.com/komsic/BookAMeal#readme",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.0",
+    "eslint-config-airbnb-base": "^13.1.0"
   }
 }
