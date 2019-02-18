@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/komsic/BookAMeal/issues"
   },
-  "homepage": "https://github.com/komsic/BookAMeal#readme"
+  "homepage": "https://github.com/komsic/BookAMeal#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
