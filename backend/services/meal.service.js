@@ -27,9 +27,16 @@ const MealService = {
     return mealToBeAdded;
   },
   getSingleMeal(id) {
-    // eslint-disable-next-line radix
-    const requestedMeal = dummyData.meals.find(meal => meal.id === parseInt(id));
+    const requestedMeal = dummyData.meals.find(meal => meal.id === parseInt(id, 10));
     return requestedMeal || {};
+  },
+  modifySingleMeal(id, modifiedMeal) {
+    let mealToBeModify = dummyData.meals.find(meal => meal.id === parseInt(id, 10));
+    if (mealToBeModify != null) {
+      mealToBeModify = modifiedMeal;
+    }
+
+    return mealToBeModify;
   },
 };
 
