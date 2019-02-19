@@ -19,7 +19,7 @@ const MealController = {
     }).status(200);
   },
   getSingleMeal(req, res) {
-    const id = req.body;
+    const { id } = req.params;
     const queriedMeal = MealService.getSingleMeal(id);
 
     return res.json({
