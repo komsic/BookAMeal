@@ -28,7 +28,7 @@ const MealController = {
     }).status(200);
   },
   modifySingleMeal(req, res) {
-    const modifiedMeal = MealService.modifySingleMeal(req.params, req.body);
+    const modifiedMeal = MealService.modifySingleMeal(req.params.id, req.body);
 
     return res.json({
       status: 'success',

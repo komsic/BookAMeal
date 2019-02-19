@@ -31,12 +31,12 @@ const MealService = {
     return requestedMeal || {};
   },
   modifySingleMeal(id, modifiedMeal) {
-    let mealToBeModify = dummyData.meals.find(meal => meal.id === parseInt(id, 10));
+    const mealToBeModify = dummyData.meals.find(meal => meal.id === parseInt(id, 10));
     if (mealToBeModify != null) {
-      mealToBeModify = modifiedMeal;
+      dummyData.meals[modifiedMeal.id - 1] = modifiedMeal;
     }
 
-    return mealToBeModify;
+    return modifiedMeal;
   },
 };
 
