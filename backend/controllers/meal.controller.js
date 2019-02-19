@@ -35,6 +35,14 @@ const MealController = {
       data: modifiedMeal,
     }).status(200);
   },
+  deleteSingleMeal(req, res) {
+    const deletedMeal = MealService.deleteSingleMeal(parseInt(req.params.id, 10));
+
+    return res.json({
+      status: 'success',
+      data: deletedMeal,
+    }).status(200);
+  },
 };
 
 export default MealController;
