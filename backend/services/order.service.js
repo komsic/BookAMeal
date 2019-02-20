@@ -15,7 +15,7 @@ const OrderService = {
   modifyOrderById(modifiedOrder) {
     const orderToBeModified = dummyData.orders.find(order => order.id === modifiedOrder.id);
     if (orderToBeModified != null) {
-      dummyData.orders[orderToBeModified - 1] = modifiedOrder;
+      dummyData.orders[orderToBeModified.id - 1] = modifiedOrder;
     }
 
     return modifiedOrder;
