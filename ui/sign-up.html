@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
+    <script src="js/sign-up.js"></script>
+</head>
+<body>
+    <div class="pop">
+        <form class="pop-form" action="js/scripts.js">
+            <label for="name" class="red">Name</label>
+            <input type="text" value="" required placeholder="Enter your name here...">
+
+            <label for="description" class="red">Description</label>
+            <input type="text" value="" required placeholder="Enter your description here...">
+
+            <label for="user-type" class="red">Register As</label>
+            <select class="user-type">
+                <option value="customer">Customer</option>
+                <option value="caterer">Caterer</option>
+            </select>
+
+            <label for="email" class="red">Email</label>
+            <input type="text" value="" required placeholder="Enter your email here...">
+
+            <label for="email" class="red">Password</label>
+            <input type="password" required value="" placeholder="Enter your password here...">
+
+            <label for="email" class="red">Confirm Password</label>
+            <input type="password" required value="" placeholder="Enter your password here...">
+
+            <input type="submit" value="Register">
+            <p>Already have an account? <a class="red" href="">Log In</a></p>
+        </form>
+    </div>
+</body>
+</html>
