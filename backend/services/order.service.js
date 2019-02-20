@@ -20,6 +20,15 @@ const OrderService = {
 
     return modifiedOrder;
   },
+  makeNewOrder(order) {
+    const orderLength = dummyData.orders.length;
+    const lastOrderId = dummyData.orders[orderLength - 1].id;
+
+    const newOrder = new Order(order);
+    newOrder.id = lastOrderId + 1;
+
+    return newOrder;
+  },
 };
 
 export default OrderService;
