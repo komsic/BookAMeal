@@ -12,6 +12,9 @@ const MenuService = {
 
     return validMenu;
   },
+  getSingleMenuById(id) {
+    return dummyData.menu.find(menu => menu.id === id) || {};
+  },
 };
 
 export default MenuService;
