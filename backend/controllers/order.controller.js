@@ -15,7 +15,7 @@ const OrderController = {
     return res.json({
       status: 'success',
       data: modifiedOrder,
-    }).status(201);
+    }).status(200);
   },
 };
 
