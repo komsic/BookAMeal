@@ -183,4 +183,32 @@ export default {
       ],
     },
   ],
+  orders: [
+    {
+      id: 1,
+      meals: [
+        {
+          id: 2,
+          name: 'Amala',
+          price: 2500,
+        },
+      ],
+      customerName: 'Harry Potter',
+      catererName: 'Honeydukes',
+      orderStatus: 'DISPATCHED',
+    },
+    {
+      id: 2,
+      meals: [
+        {
+          id: 2,
+          name: 'Amala',
+          price: 2500,
+        },
+      ],
+      customerName: 'Rand Al\'Athor',
+      catererName: 'The Queen\'s Blessing',
+      orderStatus: 'BEING PROCESSED',
+    },
+  ],
 };
