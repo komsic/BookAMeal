@@ -15,6 +15,14 @@ const MenuService = {
   getSingleMenuById(id) {
     return dummyData.menu.find(menu => menu.id === id) || {};
   },
+  modifySingleMenuById(modifiedMenu) {
+    const menuToBeModify = dummyData.menu.find(meal => meal.id === modifiedMenu.id);
+    if (menuToBeModify != null) {
+      dummyData.menu[modifiedMenu.id - 1] = modifiedMenu;
+    }
+
+    return modifiedMenu;
+  },
 };
 
 export default MenuService;

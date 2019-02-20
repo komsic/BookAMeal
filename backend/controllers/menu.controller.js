@@ -17,6 +17,14 @@ const MenuController = {
       data: requiredMenu,
     }).status(200);
   },
+  modifySingleMenuById(req, res) {
+    const modifiedMenu = MenuService.modifySingleMenuById(req.body);
+
+    return res.json({
+      status: 'success',
+      data: modifiedMenu,
+    }).status(200);
+  },
 };
 
 export default MenuController;
