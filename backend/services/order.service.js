@@ -26,6 +26,7 @@ const OrderService = {
 
     const newOrder = new Order(order);
     newOrder.id = lastOrderId + 1;
+    dummyData.orders.push(newOrder);
 
     return newOrder;
   },
