@@ -17,6 +17,14 @@ const OrderController = {
       data: modifiedOrder,
     }).status(200);
   },
+  makeNewOrder(req, res) {
+    const newOrder = OrderService.makeNewOrder(req.body);
+
+    return res.json({
+      status: 'success',
+      data: newOrder,
+    }).status(201);
+  },
 };
 
 export default OrderController;
