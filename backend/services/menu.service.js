@@ -23,6 +23,16 @@ const MenuService = {
 
     return modifiedMenu;
   },
+  setUpNewMenu(menu) {
+    const menuLength = dummyData.menu.length;
+    const lastId = dummyData.menu[menuLength - 1].id;
+
+    const newMenu = new Menu(menu.name, menu.meals);
+    newMenu.id = lastId + 1;
+    dummyData.menu.push(newMenu);
+
+    return newMenu;
+  },
 };
 
 export default MenuService;

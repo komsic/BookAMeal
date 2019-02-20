@@ -25,6 +25,14 @@ const MenuController = {
       data: modifiedMenu,
     }).status(200);
   },
+  setUpNewMenu(req, res) {
+    const newMenu = MenuService.setUpNewMenu(req.body);
+
+    return res.json({
+      status: 'success',
+      data: newMenu,
+    }).status(201);
+  },
 };
 
 export default MenuController;
