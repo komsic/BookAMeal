@@ -13,7 +13,7 @@ const MenuService = {
     return validMenu;
   },
   getSingleMenuById(id) {
-    return dummyData.meals.find(menu => menu.id === id) || {};
+    return dummyData.menu.find(menu => menu.id === id) || {};
   },
 };
 
