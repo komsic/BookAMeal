@@ -9,6 +9,14 @@ const OrderController = {
       data: allOrders,
     }).status(200);
   },
+  modifyOrderById(req, res) {
+    const modifiedOrder = OrderService.modifyOrderById(req.body);
+
+    return res.json({
+      status: 'success',
+      data: modifiedOrder,
+    }).status(201);
+  },
 };
 
 export default OrderController;
