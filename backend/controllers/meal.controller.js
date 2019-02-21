@@ -41,7 +41,7 @@ const MealController = {
     return res.json({
       status: 'success',
       data: deletedMeal,
-    }).status(200);
+    }).status(206);
   },
 };
 
