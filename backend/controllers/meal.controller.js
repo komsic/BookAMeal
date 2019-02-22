@@ -16,7 +16,7 @@ const MealController = {
     return res.json({
       status: 'success',
       data: createdMeal,
-    }).status(200);
+    }).status(201);
   },
   getSingleMeal(req, res) {
     const { id } = req.params;
@@ -41,7 +41,7 @@ const MealController = {
     return res.json({
       status: 'success',
       data: deletedMeal,
-    }).status(200);
+    }).status(206);
   },
 };
 
