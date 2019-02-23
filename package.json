@@ -5,7 +5,8 @@
   "main": "backend/index.js",
   "scripts": {
     "start": "nodemon backend/index.js --exec babel-node",
-    "test": "mocha --require @babel/register",
+    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register --exit",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel backend -d dist",
     "serve": "node dist/index.js"
   },
