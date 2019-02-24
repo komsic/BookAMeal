@@ -44,3 +44,22 @@ describe('Meal POST /', () => {
       });
   });
 });
+
+describe('Meal GET/:id', () => {
+  it('it should return a meal with the provided id', (done) => {
+    const specifiedId = 1;
+    const intendedMeal = dummyData.meals.find(meal => meal.id === specifiedId);
+
+    chai.request(app)
+      .get(`${API_PREFIX}/${specifiedId}`)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+
+        const { data } = res.body;
+        expect(data).to.have.property('name', intendedMeal.name);
+        expect(data).to.have.property('price', intendedMeal.price);
+        done();
+      });
+  });
+});
