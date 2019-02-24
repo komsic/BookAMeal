@@ -42,3 +42,26 @@ describe('Menu GET/:id', () => {
       });
   });
 });
+
+describe('Menu PUT/:id', () => {
+  it('it should update menu by id', (done) => {
+    const specifiedId = 1;
+    const menuTobeUpdated = dummyData.menu.find(_menu => _menu.id === specifiedId);
+    menuTobeUpdated.name = 'The Gates Of Heaven';
+    menuTobeUpdated.meals = dummyData.meals;
+
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(menuTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+
+        const { data } = res.body;
+        expect(data).to.have.property('name', menuTobeUpdated.name);
+        expect(data).to.have.property('meals').with.lengthOf(dummyData.meals.length);
+        expect(data).to.have.property('id', menuTobeUpdated.id);
+        done();
+      });
+  });
+});
