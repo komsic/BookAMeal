@@ -63,3 +63,27 @@ describe('Meal GET/:id', () => {
       });
   });
 });
+
+describe('Meal PUT/:id', () => {
+  it('it should update meal', (done) => {
+    const specifiedId = 1;
+    const mealTobeUpdated = dummyData.meals.find(meal => meal.id === specifiedId);
+    mealTobeUpdated.name = 'Banga Soup';
+    mealTobeUpdated.price = 1000;
+    mealTobeUpdated.quantity = 8;
+
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(mealTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+
+        const { data } = res.body;
+        expect(data).to.have.property('name', mealTobeUpdated.name);
+        expect(data).to.have.property('price', mealTobeUpdated.price);
+        expect(data).to.have.property('quantity', mealTobeUpdated.quantity);
+        done();
+      });
+  });
+});
