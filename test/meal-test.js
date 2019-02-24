@@ -87,3 +87,26 @@ describe('Meal PUT/:id', () => {
       });
   });
 });
+
+describe('Meal DELETE/:id', () => {
+  it('it should delete the meal with the specified id', (done) => {
+    const expectedTotalMealLength = dummyData.meals.length - 1;
+
+    const specifiedId = 1;
+    const intendedMealToBeDeleted = dummyData.meals.find(meal => meal.id === specifiedId);
+
+    chai.request(app)
+      .delete(`${API_PREFIX}/${specifiedId}`)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+
+        const { data } = res.body;
+        expect(data).to.have.property('name', intendedMealToBeDeleted.name);
+        expect(data).to.have.property('price', intendedMealToBeDeleted.price);
+        expect(dummyData.meals.length).to.equal(expectedTotalMealLength);
+
+        done();
+      });
+  });
+});
