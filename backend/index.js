@@ -6,7 +6,7 @@ import menuRoutes from './routes/menu.route';
 import orderRoutes from './routes/order.route';
 
 const app = express();
-const PORT = 9001;
+const PORT = process.env.PORT || 9001;
 
 app.use(bodyParser.json());
 
