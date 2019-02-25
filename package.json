@@ -9,6 +9,7 @@
     "test": "nyc --reporter=html --reporter=text mocha --require @babel/register --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "npm run clean && babel backend -d ./dist",
+    "clean": "rm -rf dist && mkdir dist",
     "serve": "node dist/index.js"
   },
   "repository": {
