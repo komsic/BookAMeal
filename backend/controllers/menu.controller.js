@@ -4,6 +4,13 @@ const MenuController = {
   getAllMenu(req, res) {
     const allMenu = MenuService.getAllMenu();
 
+    if (allMenu.length === 0) {
+      return res.json({
+        status: 'successful but there is no menu in this list',
+        data: allMenu,
+      }).status(200);
+    }
+
     return res.json({
       status: 'success',
       data: allMenu,
