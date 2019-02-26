@@ -67,6 +67,31 @@ describe('Order PUT/:id', () => {
         done();
       });
   });
+
+  it('it should return error if id does not exist', (done) => {
+    const specifiedId = 101;
+    const order = {
+      id: specifiedId,
+      meals: dummyData.meals,
+      customerName: 'Gale Hawthorne',
+      catererName: 'Greasey Sae Kitchen',
+      orderStatus: 'DISPATCHED',
+    };
+    const orderTobeUpdated = new Order(order);
+
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(orderTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+
+        const { status } = res.body;
+        expect(status).to.equal('order of this id does not exist');
+
+        done();
+      });
+  });
 });
 
 describe('Order POST /', () => {
