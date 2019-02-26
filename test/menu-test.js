@@ -99,6 +99,25 @@ describe('Menu PUT/:id', () => {
         done();
       });
   });
+
+  it('it should return error if id does not exist', (done) => {
+    const specifiedId = 101;
+    const menuTobeUpdated = new Menu('Guraj', dummyData.meals);
+    menuTobeUpdated.id = specifiedId;
+
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(menuTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+
+        const { status } = res.body;
+        expect(status).to.equal('menu of this id does not exist');
+
+        done();
+      });
+  });
 });
 
 describe('Menu POST /', () => {
