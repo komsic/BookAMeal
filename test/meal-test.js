@@ -117,6 +117,32 @@ describe('Meal PUT/:id', () => {
         expect(data).to.have.property('name', mealTobeUpdated.name);
         expect(data).to.have.property('price', mealTobeUpdated.price);
         expect(data).to.have.property('quantity', mealTobeUpdated.quantity);
+
+        const updatedMeal = dummyData.meals.find(meal => meal.id === specifiedId);
+        expect(data).to.have.property('name', updatedMeal.name);
+        expect(data).to.have.property('price', updatedMeal.price);
+        expect(data).to.have.property('quantity', updatedMeal.quantity);
+        done();
+      });
+  });
+
+  it('it should return error if id does not exist', (done) => {
+    const specifiedId = 101;
+    const mealTobeUpdated = new Meal();
+    mealTobeUpdated.name = 'Banga Soup';
+    mealTobeUpdated.price = 1000;
+    mealTobeUpdated.quantity = 8;
+
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(mealTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+
+        const { status } = res.body;
+        expect(status).to.equal('meal of this id does not exist');
+
         done();
       });
   });

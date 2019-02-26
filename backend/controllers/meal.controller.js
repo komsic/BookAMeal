@@ -43,6 +43,12 @@ const MealController = {
   },
   modifySingleMeal(req, res) {
     const modifiedMeal = MealService.modifySingleMeal(req.params.id, req.body);
+    if (modifiedMeal === undefined) {
+      return res.json({
+        status: 'meal of this id does not exist',
+        data: {},
+      }).status(200);
+    }
 
     return res.json({
       status: 'success',
