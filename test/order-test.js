@@ -21,6 +21,24 @@ describe('Order GET /', () => {
         done();
       });
   });
+
+  it('get all orders that return with zero order should indicate with a message', (done) => {
+    const copyOfDummyOrders = dummyData.orders.slice();
+    dummyData.orders = [];
+
+    chai.request(app)
+      .get(API_PREFIX)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('data').with.lengthOf(0);
+        expect(res.body).to.have.property('status');
+        const { status } = res.body;
+        expect(status).to.equal('successful but there is no order in this list');
+        dummyData.orders = copyOfDummyOrders.slice();
+        done();
+      });
+  });
 });
 
 
