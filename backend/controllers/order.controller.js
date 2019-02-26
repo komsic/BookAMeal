@@ -4,6 +4,13 @@ const OrderController = {
   getAllOrder(req, res) {
     const allOrders = OrderService.getAllOrder();
 
+    if (allOrders.length === 0) {
+      return res.json({
+        status: 'successful but there is no order in this list',
+        data: allOrders,
+      }).status(200);
+    }
+
     return res.json({
       status: 'success',
       data: allOrders,
