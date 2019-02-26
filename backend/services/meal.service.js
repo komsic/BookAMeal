@@ -39,7 +39,7 @@ const MealService = {
     return dummyData.meals[modifiedMeal.id - 1];
   },
   deleteSingleMeal(id) {
-    return id < dummyData.meals.length ? dummyData.meals.splice(id - 1, 1)[0] : {};
+    return id <= dummyData.meals.length ? dummyData.meals.splice(id - 1, 1)[0] : {};
   },
 };
 
