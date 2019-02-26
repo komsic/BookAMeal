@@ -36,7 +36,6 @@ describe('Meal GET /', () => {
         const { status } = res.body;
         expect(status).to.equal('successful but there is no meal in this list');
         dummyData.meals = copyOfDummyMeals.slice();
-        console.log(dummyData.meals);
         done();
       });
   });
