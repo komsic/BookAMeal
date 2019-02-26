@@ -19,6 +19,13 @@ const MenuController = {
   getSingleMenuById(req, res) {
     const requiredMenu = MenuService.getSingleMenuById(parseInt(req.params.id, 10));
 
+    if (Object.entries(requiredMenu).length === 0 && requiredMenu.constructor === Object) {
+      return res.json({
+        status: 'menu of this id does not exist',
+        data: requiredMenu,
+      }).status(200);
+    }
+
     return res.json({
       status: 'success',
       data: requiredMenu,
