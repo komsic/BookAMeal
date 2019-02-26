@@ -22,6 +22,24 @@ describe('Menu GET/', () => {
         done();
       });
   });
+
+  it('get all menu that return with zero menu should indicate with a message', (done) => {
+    const copyOfDummyMenu = dummyData.menu.slice();
+    dummyData.menu = [];
+
+    chai.request(app)
+      .get(API_PREFIX)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('data').with.lengthOf(0);
+        expect(res.body).to.have.property('status');
+        const { status } = res.body;
+        expect(status).to.equal('successful but there is no menu in this list');
+        dummyData.menu = copyOfDummyMenu.slice();
+        done();
+      });
+  });
 });
 
 describe('Menu GET/:id', () => {
