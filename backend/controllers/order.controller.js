@@ -19,6 +19,13 @@ const OrderController = {
   modifyOrderById(req, res) {
     const modifiedOrder = OrderService.modifyOrderById(req.body);
 
+    if (modifiedOrder === undefined) {
+      return res.json({
+        status: 'order of this id does not exist',
+        data: {},
+      }).status(200);
+    }
+
     return res.json({
       status: 'success',
       data: modifiedOrder,
