@@ -29,6 +29,13 @@ const MealController = {
     const { id } = req.params;
     const queriedMeal = MealService.getSingleMeal(id);
 
+    if (Object.entries(queriedMeal).length === 0 && queriedMeal.constructor === Object) {
+      return res.json({
+        status: 'meal of this id does not exist',
+        data: queriedMeal,
+      }).status(200);
+    }
+
     return res.json({
       status: 'success',
       data: queriedMeal,
