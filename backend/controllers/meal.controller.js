@@ -58,6 +58,14 @@ const MealController = {
   deleteSingleMeal(req, res) {
     const deletedMeal = MealService.deleteSingleMeal(parseInt(req.params.id, 10));
 
+
+    if (Object.entries(deletedMeal).length === 0 && deletedMeal.constructor === Object) {
+      return res.json({
+        status: 'meal of this id does not exist',
+        data: deletedMeal,
+      }).status(200);
+    }
+
     return res.json({
       status: 'success',
       data: deletedMeal,

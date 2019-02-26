@@ -169,4 +169,20 @@ describe('Meal DELETE/:id', () => {
         done();
       });
   });
+
+  it('it should return error if id does not exist', (done) => {
+    const specifiedId = 101;
+
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+
+        const { status } = res.body;
+        expect(status).to.equal('meal of this id does not exist');
+
+        done();
+      });
+  });
 });
