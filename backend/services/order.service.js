@@ -12,13 +12,14 @@ const OrderService = {
 
     return orders;
   },
-  modifyOrderById(modifiedOrder) {
-    const orderToBeModified = dummyData.orders.find(order => order.id === modifiedOrder.id);
+  modifyOrderById(modifiedOrder, id) {
+    const orderToBeModified = dummyData.orders.find(order => order.id === id);
     if (orderToBeModified != null) {
-      dummyData.orders[modifiedOrder.id - 1] = modifiedOrder;
+      dummyData.orders[id - 1] = modifiedOrder;
+      dummyData.orders[id - 1].id = id;
     }
 
-    return dummyData.orders[modifiedOrder.id - 1];
+    return dummyData.orders[id - 1];
   },
   makeNewOrder(order) {
     const orderLength = dummyData.orders.length;
