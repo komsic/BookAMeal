@@ -34,6 +34,13 @@ const MenuController = {
   modifySingleMenuById(req, res) {
     const modifiedMenu = MenuService.modifySingleMenuById(req.body);
 
+    if (modifiedMenu === undefined) {
+      return res.json({
+        status: 'menu of this id does not exist',
+        data: {},
+      }).status(200);
+    }
+
     return res.json({
       status: 'success',
       data: modifiedMenu,
