@@ -17,7 +17,7 @@ const OrderController = {
     }).status(200);
   },
   modifyOrderById(req, res) {
-    const modifiedOrder = OrderService.modifyOrderById(req.body);
+    const modifiedOrder = OrderService.modifyOrderById(req.body, parseInt(req.params.id, 10));
 
     if (modifiedOrder === undefined) {
       return res.json({
