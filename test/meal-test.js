@@ -21,6 +21,24 @@ describe('Meal GET /', () => {
         done();
       });
   });
+
+  it('get all meals that return with zero meals should indicate with a message', (done) => {
+    const copyOfDummyMeals = dummyData.meals.slice();
+    dummyData.meals = [];
+
+    chai.request(app)
+      .get(API_PREFIX)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('data').with.lengthOf(0);
+        expect(res.body).to.have.property('status');
+        const { status } = res.body;
+        expect(status).to.equal('successful but there is no meal in this list');
+        dummyData.meals = copyOfDummyMeals.slice();
+        done();
+      });
+  });
 });
 
 describe('Meal POST /', () => {
