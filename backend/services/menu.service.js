@@ -21,7 +21,7 @@ const MenuService = {
       dummyData.menu[modifiedMenu.id - 1] = modifiedMenu;
     }
 
-    return modifiedMenu;
+    return dummyData.menu[modifiedMenu.id - 1];
   },
   setUpNewMenu(menu) {
     const menuLength = dummyData.menu.length;
