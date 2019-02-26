@@ -4,6 +4,13 @@ const MealController = {
   fetchAllMeals(req, res) {
     const allMeals = MealService.fetchAllMeals();
 
+    if (allMeals.length === 0) {
+      return res.json({
+        status: 'successful but there is no meal in this list',
+        data: allMeals,
+      }).status(200);
+    }
+
     return res.json({
       status: 'success',
       data: allMeals,

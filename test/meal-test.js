@@ -23,7 +23,7 @@ describe('Meal GET /', () => {
   });
 
   it('get all meals that return with zero meals should indicate with a message', (done) => {
-    const copyOfDummyMeals = dummyData.meals;
+    const copyOfDummyMeals = dummyData.meals.slice();
     dummyData.meals = [];
 
     chai.request(app)
@@ -34,10 +34,9 @@ describe('Meal GET /', () => {
         expect(res.body).to.have.property('data').with.lengthOf(0);
         expect(res.body).to.have.property('status');
         const { status } = res.body;
-        console.log(status);
-
-        expect(status).to.equal('Successful but there is no meal in this list');
-        dummyData.meals = copyOfDummyMeals;
+        expect(status).to.equal('successful but there is no meal in this list');
+        dummyData.meals = copyOfDummyMeals.slice();
+        console.log(dummyData.meals);
         done();
       });
   });
