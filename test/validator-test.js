@@ -35,3 +35,22 @@ describe('Validate that input only contain positive number id', () => {
     expect(result.error).to.be.a('null');
   });
 });
+
+describe('Validate Meal input', () => {
+  const validate = meal => Joi.validate(meal, validator.getMealSchema());
+  it('It should ensure that when id is present (not null), then at least one of name, price, or quantity exist', () => {
+    const meal = {
+      id: 5,
+    };
+    const result = validate(meal);
+    expect(getErrorMessage(result)).to.equal('meal must have at least 2 children');
+  });
+
+  it('It should ensure that when id is not present (null), then name must exist', () => {
+    const meal = {
+      price: 4500,
+    };
+    const result = validate(meal);
+    expect(getErrorMessage(result)).to.equal('child name fails because [name is required]');
+  });
+});
