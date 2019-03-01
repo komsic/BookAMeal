@@ -16,7 +16,7 @@ class Validator {
   getMealSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
       id: this.Joi.number().greater(0).allow(null).default(null),
-      name: this.Joi.string().min(1)
+      name: this.getStringSchema()
         .when('id', { is: null, then: Joi.required() }),
       quantity: this.getPositiveNonZeroNumberSchema(),
       price: this.getPositiveNonZeroNumberSchema(),
