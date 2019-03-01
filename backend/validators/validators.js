@@ -9,6 +9,10 @@ class Validator {
     return this.Joi.number().integer().greater(0);
   }
 
+  getStringSchema() {
+    return this.Joi.string().trim().min(1);
+  }
+
   getMealSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
       id: this.Joi.number().greater(0).allow(null).default(null),
