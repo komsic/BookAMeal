@@ -176,11 +176,11 @@ describe('Meal DELETE/:id', () => {
     chai.request(app)
       .put(`${API_PREFIX}/${specifiedId}`)
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(422);
         expect(res.body).to.be.a('object');
 
         const { status } = res.body;
-        expect(status).to.equal('meal of this id does not exist');
+        expect(status).to.equal('failed');
 
         done();
       });
