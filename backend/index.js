@@ -4,11 +4,14 @@ import bodyParser from 'body-parser';
 import mealRoutes from './routes/meal.route';
 import menuRoutes from './routes/menu.route';
 import orderRoutes from './routes/order.route';
+import validator from './middlewares/validator-middleware';
 
 const app = express();
 const PORT = process.env.PORT || 9001;
 
 app.use(bodyParser.json());
+// const mw = validator();
+app.use(validator());
 
 app.get('/', (req, res) => res.send('The API is working'));
 
