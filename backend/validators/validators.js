@@ -35,6 +35,21 @@ class Validator {
       meals: this.getMealArraySchema('Menu meals').optional(),
     }).or('id', 'name');
   }
+
+  getOrderSchema() {
+    return this.Joi.object().options({ abortEarly: false }).keys({
+      id: this.getPositiveNonZeroNumberSchema().allow(null).default(null).label('Order id'),
+      customerName: this.getStringSchema('Customer name')
+        .when('id', { is: null, then: Joi.required() }),
+      catererName: this.getStringSchema('Caterer name')
+        .when('id', { is: null, then: Joi.required() }),
+      orderStatus: this.getStringSchema('Order Status').uppercase()
+        .valid('CANCELLED', 'BEING PROCESSED', 'DISPATCHED', 'DELIVERED')
+        .when('id', { is: null, then: Joi.required() }),
+      meals: this.getMealArraySchema('Ordered meals')
+        .when('id', { is: null, then: Joi.required() }),
+    }).label('order');
+  }
 }
 
 export default Validator;
