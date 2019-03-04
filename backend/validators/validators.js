@@ -25,14 +25,14 @@ class Validator {
   }
 
   getMealArraySchema(label) {
-    return this.Joi.array().items(this.getMealSchema()).label(label);
+    return this.Joi.array().items(this.getMealSchema()).min(1).label(label);
   }
 
   getMenuSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
       id: this.getPositiveNonZeroNumberSchema(),
       name: this.getStringSchema('Menu name'),
-      meals: this.getMealArraySchema('Menu meals').min(1).optional(),
+      meals: this.getMealArraySchema('Menu meals').optional(),
     }).or('id', 'name');
   }
 }
