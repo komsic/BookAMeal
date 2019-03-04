@@ -63,7 +63,7 @@ describe('Validate Meal input', () => {
 });
 
 describe('Validate Meal Array', () => {
-  const validate = meals => Joi.validate(meals, validator.getMealArraySchema());
+  const validate = meals => Joi.validate(meals, validator.getMealArraySchema('meal list'));
   it('It should validate that the array contains meals only', () => {
     const meals = [
       {

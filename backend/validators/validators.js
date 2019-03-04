@@ -24,8 +24,8 @@ class Validator {
       .label('meal');
   }
 
-  getMealArraySchema() {
-    return this.Joi.array().items(this.getMealSchema());
+  getMealArraySchema(label) {
+    return this.Joi.array().items(this.getMealSchema()).label(label);
   }
 
   getMenuSchema() {
