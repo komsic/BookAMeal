@@ -58,7 +58,7 @@ describe('Validate Meal input', () => {
       price: 4500,
     };
     const result = validate(meal);
-    expect(getErrorMessage(result)).to.equal('child name fails because [name is required]');
+    expect(getErrorMessage(result)).to.equal('child name fails because [Meal name is required]');
   });
 });
 
