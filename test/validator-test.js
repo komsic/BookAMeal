@@ -83,4 +83,10 @@ describe('Validate Meal Array', () => {
     const result = validate(meals);
     expect(result.error).to.be.an('error');
   });
+
+  it('It should validate that the array may contain empty meal', () => {
+    const meals = [];
+    const result = validate(meals);
+    expect(result.error).to.be.an('null');
+  });
 });
