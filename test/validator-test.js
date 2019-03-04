@@ -90,3 +90,33 @@ describe('Validate Meal Array', () => {
     expect(result.error).to.be.an('null');
   });
 });
+
+describe('Validate Menu', () => {
+  const validate = _menu => Joi.validate(_menu, validator.getMenuSchema());
+
+  it('it should validate that either name or id must exist', () => {
+    const menu = {
+      meals: [
+        {
+          id: 4,
+          name: 'Amala',
+          price: 500,
+          quantity: 4,
+        },
+      ],
+    };
+
+    const result = validate(menu);
+    expect(result.error).to.be.a('error');
+  });
+
+  it('it should validate that meals length must be greater than 0', () => {
+    const menu = {
+      id: 4,
+      meals: [],
+    };
+
+    const result = validate(menu);
+    expect(result.error).to.be.a('error');
+  });
+});
