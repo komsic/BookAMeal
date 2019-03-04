@@ -61,3 +61,26 @@ describe('Validate Meal input', () => {
     expect(getErrorMessage(result)).to.equal('child name fails because [name is required]');
   });
 });
+
+describe('Validate Meal Array', () => {
+  const validate = meals => Joi.validate(meals, validator.getMealArraySchema());
+  it('It should validate that the array contains meals only', () => {
+    const meals = [
+      {
+        price: 400,
+      },
+      {
+        id: 10,
+      },
+      {
+        id: 10,
+      },
+      {
+        id: 10,
+      },
+    ];
+
+    const result = validate(meals);
+    expect(result.error).to.be.an('error');
+  });
+});
