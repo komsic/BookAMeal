@@ -38,7 +38,7 @@ describe('Validate that input only contain positive number id', () => {
 
 describe('Validate String input', () => {
   it('It should ensure input is a string with more than one character and the character must never be whitespace', () => {
-    const result = Joi.validate(' ', validator.getStringSchema());
+    const result = Joi.validate(' ', validator.getStringSchema('value'));
     expect(getErrorMessage(result)).to.equal('value is not allowed to be empty');
   });
 });

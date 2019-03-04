@@ -9,14 +9,14 @@ class Validator {
     return this.Joi.number().integer().greater(0);
   }
 
-  getStringSchema() {
-    return this.Joi.string().trim().min(1);
+  getStringSchema(label) {
+    return this.Joi.string().trim().min(1).label(label);
   }
 
   getMealSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
       id: this.Joi.number().greater(0).allow(null).default(null),
-      name: this.getStringSchema().label('Meal name')
+      name: this.getStringSchema('Meal name')
         .when('id', { is: null, then: Joi.required() }),
       quantity: this.getPositiveNonZeroNumberSchema(),
       price: this.getPositiveNonZeroNumberSchema(),
@@ -31,8 +31,8 @@ class Validator {
   getMenuSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
       id: this.getPositiveNonZeroNumberSchema(),
-      name: this.getStringSchema().label('Menu name'),
-      meals: this.getMealArraySchema().min(1).optional().label('Menu meals'),
+      name: this.getStringSchema('Menu name'),
+      meals: this.getMealArraySchema('Menu meals').min(1).optional(),
     }).or('id', 'name');
   }
 }
