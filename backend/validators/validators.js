@@ -23,6 +23,10 @@ class Validator {
     }).min(2)
       .label('meal');
   }
+
+  getMealArraySchema() {
+    return this.Joi.array().items(this.getMealSchema());
+  }
 }
 
 export default Validator;
