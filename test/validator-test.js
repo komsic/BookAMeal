@@ -120,3 +120,24 @@ describe('Validate Menu', () => {
     expect(result.error).to.be.a('error');
   });
 });
+
+describe('Validate Order', () => {
+  const validate = order => Joi.validate(order, validator.getOrderSchema());
+  it('It should validate that order must include all its properties except id', () => {
+    const order = {
+      catererName: 'Honeydukes',
+      orderStatus: 'delivered',
+      meals: [
+        {
+          id: 75,
+          name: 'Aksd',
+          price: 7500,
+          quantity: 5,
+        },
+      ],
+    };
+
+    const result = validate(order);
+    expect(result.error).to.be.a('error');
+  });
+});
