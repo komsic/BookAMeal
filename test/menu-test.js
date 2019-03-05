@@ -122,7 +122,17 @@ describe('Menu PUT/:id', () => {
 
 describe('Menu POST /', () => {
   it('it should add a new menu', (done) => {
-    const newMenu = new Menu('The Stag And Lion', dummyData.meals);
+    const newMenu = {
+      id: 1,
+      name: 'Greasy Sae Kitchen',
+      meals: [
+        {
+          id: 1,
+          name: 'SDPO',
+          price: 500,
+        },
+      ],
+    };
 
     chai.request(app)
       .post(`${API_PREFIX}`)
@@ -131,8 +141,8 @@ describe('Menu POST /', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
         const { data } = res.body;
-        expect(data).to.have.property('name', newMenu.name);
-        expect(data).to.have.property('meals').with.lengthOf(dummyData.meals.length);
+        expect(data).to.have.property('name', 'Greasy Sae Kitchen');
+        expect(data).to.have.property('meals').with.lengthOf(1);
         expect(data).to.have.property('id');
         done();
       });
