@@ -83,7 +83,7 @@ describe('Order PUT/:id', () => {
       .put(`${API_PREFIX}/${specifiedId}`)
       .send(orderTobeUpdated)
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(404);
         expect(res.body).to.be.a('object');
 
         const { status } = res.body;
@@ -108,7 +108,7 @@ describe('Order POST /', () => {
       .post(`${API_PREFIX}`)
       .send(newOrder)
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(201);
         expect(res.body).to.be.an('object');
 
         const { data } = res.body;

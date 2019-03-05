@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import express from 'express';
 import bodyParser from 'body-parser';
 
@@ -10,7 +11,6 @@ const app = express();
 const PORT = process.env.PORT || 9001;
 
 app.use(bodyParser.json());
-// const mw = validator();
 app.use(validator());
 
 app.get('/', (req, res) => res.send('The API is working'));
