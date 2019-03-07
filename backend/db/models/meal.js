@@ -15,10 +15,7 @@ const meal = (sequelize, DataTypes) => {
   }, {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    deletedAt: 'deletedAt',
     timestamps: true,
-    paranoid: true,
-    underscored: true,
   });
   Meal.associate = (models) => {
     Meal.belongsTo(models.Menu, {
