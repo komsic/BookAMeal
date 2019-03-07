@@ -1,20 +1,25 @@
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Meals', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Orders', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    name: {
+    orderStatus: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    quantity: {
-      type: Sequelize.INTEGER,
+    customerName: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
-    price: {
+    menuId: {
       type: Sequelize.INTEGER,
+      references: {
+        model: 'Menus',
+        key: 'id',
+      },
     },
     createdAt: {
       allowNull: false,
@@ -25,5 +30,5 @@ export default {
       type: Sequelize.DATE,
     },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Meals'),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Orders'),
 };
