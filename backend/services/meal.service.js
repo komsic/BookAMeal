@@ -1,21 +1,12 @@
 import dummyData from '../utils/dummyData';
-import Meal from '../models/meal.model';
+import db from '../db/models';
+
+const { Meal } = db;
 
 class MealService {
   static async fetchAllMeals() {
     try {
-      const validMeals = await dummyData.meals.map((meal) => {
-        const newMeal = new Meal();
-        newMeal.id = meal.id;
-        newMeal.name = meal.name;
-        newMeal.price = meal.price;
-        newMeal.quantity = meal.quantity;
-
-        return newMeal;
-      });
-
-
-      return validMeals;
+      return await Meal.findAll();
     } catch (e) {
       const error = 'An error just occurred while fetching the meals';
       throw error;
