@@ -1,5 +1,4 @@
 import dummyData from '../utils/dummyData';
-import MenuModel from '../models/menu.model';
 import db from '../db/models';
 
 const { Menu } = db;
@@ -7,14 +6,7 @@ const { Menu } = db;
 class MenuService {
   static async getAllMenu() {
     try {
-      const validMenu = await dummyData.menu.map((menu) => {
-        const newMenu = new MenuModel(menu.name, menu.meals);
-        newMenu.id = menu.id;
-
-        return newMenu;
-      });
-
-      return validMenu;
+      return await Menu.findAll();
     } catch (e) {
       const error = 'An error just occurred while fetching the menu';
       throw error;
