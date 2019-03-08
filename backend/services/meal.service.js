@@ -32,8 +32,7 @@ class MealService {
 
   static async getSingleMeal(id) {
     try {
-      const requestedMeal = await dummyData.meals.find(meal => meal.id === parseInt(id, 10));
-      return requestedMeal || {};
+      return await Meal.findByPk(id);
     } catch (e) {
       const error = 'An error just occurred while getting the meal';
       throw error;
