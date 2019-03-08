@@ -33,12 +33,10 @@ class MealService {
 
   static async modifySingleMeal(id, modifiedMeal) {
     try {
-      const mealToBeModify = await dummyData.meals.find(meal => meal.id === parseInt(id, 10));
-      if (mealToBeModify != null) {
-        dummyData.meals[modifiedMeal.id - 1] = modifiedMeal;
-      }
+      const updatedMenu = await Meal.update(modifiedMeal,
+        { returning: true, where: { id } });
 
-      return dummyData.meals[modifiedMeal.id - 1];
+      return updatedMenu[1][0];
     } catch (e) {
       const error = 'An error just occurred while updating the meal';
       throw error;
