@@ -1,11 +1,14 @@
 import dummyData from '../utils/dummyData';
-import Menu from '../models/menu.model';
+import MenuModel from '../models/menu.model';
+import db from '../db/models';
+
+const { Menu } = db;
 
 class MenuService {
   static async getAllMenu() {
     try {
       const validMenu = await dummyData.menu.map((menu) => {
-        const newMenu = new Menu(menu.name, menu.meals);
+        const newMenu = new MenuModel(menu.name, menu.meals);
         newMenu.id = menu.id;
 
         return newMenu;
@@ -38,16 +41,9 @@ class MenuService {
 
   static async setUpNewMenu(menu) {
     try {
-      const menuLength = dummyData.menu.length;
-      const lastId = dummyData.menu[menuLength - 1].id;
-
-      const newMenu = new Menu(menu.name, menu.meals);
-      newMenu.id = lastId + 1;
-      dummyData.menu.push(newMenu);
-
-      return newMenu;
+      return await Menu.create(menu);
     } catch (e) {
-      const error = 'An error just occurred while fetching the menu';
+      const error = 'An error just occurred while posting a new menu';
       throw error;
     }
   }
