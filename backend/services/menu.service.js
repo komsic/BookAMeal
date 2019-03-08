@@ -19,12 +19,10 @@ class MenuService {
 
   static async modifySingleMenuById(modifiedMenu) {
     try {
-      const menuToBeModify = await dummyData.menu.find(meal => meal.id === modifiedMenu.id);
-      if (menuToBeModify != null) {
-        dummyData.menu[modifiedMenu.id - 1] = modifiedMenu;
-      }
+      const updatedMenu = await Menu.update(modifiedMenu,
+        { returning: true, where: { id: modifiedMenu.id } });
 
-      return dummyData.menu[modifiedMenu.id - 1];
+      return updatedMenu[1][0];
     } catch (e) {
       const error = 'An error just occurred while fetching the menu';
       throw error;
