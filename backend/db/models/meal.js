@@ -15,13 +15,15 @@ const meal = (sequelize, DataTypes) => {
   }, {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    deletedAt: 'deletedAt',
     timestamps: true,
-    paranoid: true,
-    underscored: true,
   });
   Meal.associate = (models) => {
-    Meal.hasMany(models.Order, {
+    Meal.belongsTo(models.Menu, {
+      foreignKey: 'menuId',
+      as: 'Menu',
+    });
+    Meal.belongsToMany(models.Order, {
+      through: models.OrderMeal,
       foreignKey: 'mealId',
       as: 'Orders',
     });
