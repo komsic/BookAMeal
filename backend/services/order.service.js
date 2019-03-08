@@ -16,13 +16,10 @@ class OrderService {
 
   static async modifyOrderById(modifiedOrder, id) {
     try {
-      const orderToBeModified = await dummyData.orders.find(order => order.id === id);
-      if (orderToBeModified != null) {
-        dummyData.orders[id - 1] = modifiedOrder;
-        dummyData.orders[id - 1].id = id;
-      }
+      const updatedOrder = await Order.update(modifiedOrder,
+        { returning: true, where: { id } });
 
-      return dummyData.orders[id - 1];
+      return updatedOrder[1][0];
     } catch (e) {
       const error = 'An error just occurred while deleting the meal';
       throw error;
