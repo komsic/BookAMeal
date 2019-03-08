@@ -15,15 +15,7 @@ class MealService {
 
   static async addMeal(meal) {
     try {
-      const mealLength = await dummyData.meals.length;
-      const lastId = await dummyData.meals[mealLength - 1].id;
-      const newId = lastId + 1;
-
-      const mealToBeAdded = meal;
-      mealToBeAdded.id = newId;
-      await dummyData.meals.push(mealToBeAdded);
-
-      return mealToBeAdded;
+      return await Meal.create(meal);
     } catch (e) {
       const error = 'An error just occurred while creating a meal';
       throw error;
