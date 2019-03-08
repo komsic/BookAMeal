@@ -69,16 +69,15 @@ class MealController {
   static async deleteSingleMeal(req, res) {
     MealService.deleteSingleMeal(parseInt(req.params.id, 10))
       .then((deletedMeal) => {
-        if (Object.entries(deletedMeal).length === 0 && deletedMeal.constructor === Object) {
+        if (deletedMeal === 0) {
           return res.status(404).json({
             status: 'meal of this id does not exist',
-            data: deletedMeal,
           });
         }
 
         return res.status(200).json({
           status: 'success',
-          data: deletedMeal,
+          data: {},
         });
       }).catch(error => res.status(500)
         .json(ResponseTransformer.transform(500, error.error)));

@@ -1,4 +1,3 @@
-import dummyData from '../utils/dummyData';
 import db from '../db/models';
 
 const { Meal } = db;
@@ -45,7 +44,7 @@ class MealService {
 
   static async deleteSingleMeal(id) {
     try {
-      return await id <= dummyData.meals.length ? dummyData.meals.splice(id - 1, 1)[0] : {};
+      return await Meal.destroy({ returning: true, where: { id } });
     } catch (e) {
       const error = 'An error just occurred while deleting the meal';
       throw error;
