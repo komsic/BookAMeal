@@ -1,17 +1,13 @@
 import dummyData from '../utils/dummyData';
-import Order from '../models/order.model';
+import OrderModel from '../models/order.model';
+import db from '../db/models';
+
+const { Order } = db;
 
 class OrderService {
   static async getAllOrder() {
     try {
-      const orders = await dummyData.orders.map((order) => {
-        const newOrder = new Order(order);
-        newOrder.id = order.id;
-
-        return newOrder;
-      });
-
-      return orders;
+      return await Order.findAll();
     } catch (e) {
       const error = 'An error just occurred while fetching all orders';
       throw error;
@@ -38,7 +34,7 @@ class OrderService {
       const orderLength = await dummyData.orders.length;
       const lastOrderId = await dummyData.orders[orderLength - 1].id;
 
-      const newOrder = new Order(order);
+      const newOrder = new OrderModel(order);
       newOrder.id = lastOrderId + 1;
       await dummyData.orders.push(newOrder);
 
