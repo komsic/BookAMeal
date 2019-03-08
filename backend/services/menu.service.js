@@ -1,4 +1,3 @@
-import dummyData from '../utils/dummyData';
 import db from '../db/models';
 
 const { Menu } = db;
@@ -14,7 +13,12 @@ class MenuService {
   }
 
   static async getSingleMenuById(id) {
-    return await dummyData.menu.find(menu => menu.id === id) || {};
+    try {
+      return await Menu.findByPk(id);
+    } catch (e) {
+      const error = 'An error just occurred while fetching the menu of this id';
+      throw error;
+    }
   }
 
   static async modifySingleMenuById(modifiedMenu) {
