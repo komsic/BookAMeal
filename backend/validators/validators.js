@@ -37,18 +37,28 @@ class Validator {
     }).or('id', 'name');
   }
 
+  getOrderMealShema() {
+    return this.Joi.object().options({ abortEarly: false }).keys({
+      quantity: this.getPositiveNonZeroNumberSchema().label('order quantity'),
+      mealId: this.getPositiveNonZeroNumberSchema().label('order meal id'),
+    });
+  }
+
+  getOrderMealArrayShema(label) {
+    return this.Joi.array().items(this.getOrderMealShema()).min(1).label(label);
+  }
+
   getOrderSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
       id: this.getPositiveNonZeroNumberSchema().allow(null).default(null).label('Order id'),
       customerName: this.getStringSchema('Customer name')
         .when('id', { is: null, then: Joi.required() }),
-      catererName: this.getStringSchema('Caterer name')
-        .when('id', { is: null, then: Joi.required() }),
       orderStatus: this.getStringSchema('Order Status').uppercase()
         .valid('CANCELLED', 'BEING PROCESSED', 'DISPATCHED', 'DELIVERED')
         .when('id', { is: null, then: Joi.required() }),
-      meals: this.getMealArraySchema('Ordered meals')
+      orderedMeals: this.getOrderMealArrayShema('Ordered meals')
         .when('id', { is: null, then: Joi.required() }),
+      menuId: this.getPositiveNonZeroNumberSchema().label('Order menu id'),
     }).label('order');
   }
 }

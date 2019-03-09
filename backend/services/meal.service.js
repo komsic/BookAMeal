@@ -5,7 +5,12 @@ const { Meal } = db;
 class MealService {
   static async fetchAllMeals() {
     try {
-      return await Meal.findAll();
+      return await Meal.findAll({
+        include: {
+          model: db.Order,
+          as: 'Orders',
+        },
+      });
     } catch (e) {
       const error = 'An error just occurred while fetching the meals';
       throw error;
@@ -23,7 +28,12 @@ class MealService {
 
   static async getSingleMeal(id) {
     try {
-      return await Meal.findByPk(id);
+      return await Meal.findByPk(id, {
+        include: {
+          model: db.Order,
+          as: 'Orders',
+        },
+      });
     } catch (e) {
       const error = 'An error just occurred while getting the meal';
       throw error;
