@@ -28,12 +28,9 @@ class OrderService {
 
   static async makeNewOrder(order) {
     try {
-      const orderLength = await dummyData.orders.length;
-      const lastOrderId = await dummyData.orders[orderLength - 1].id;
-
-      const newOrder = new OrderModel(order);
-      newOrder.id = lastOrderId + 1;
-      await dummyData.orders.push(newOrder);
+      const newOrder = await Order.create(order);
+      await order.orderedMeals.forEach(orderedMeal => newOrder.addMeal(orderedMeal.mealId,
+        { through: { quantity: orderedMeal.quantity } }));
 
       return newOrder;
     } catch (e) {
