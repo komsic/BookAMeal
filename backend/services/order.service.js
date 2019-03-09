@@ -1,5 +1,3 @@
-import dummyData from '../utils/dummyData';
-import OrderModel from '../models/order.model';
 import db from '../db/models';
 
 const { Order } = db;
@@ -7,7 +5,12 @@ const { Order } = db;
 class OrderService {
   static async getAllOrder() {
     try {
-      return await Order.findAll();
+      return await Order.findAll({
+        include: {
+          model: db.Meal,
+          as: 'Meals',
+        },
+      });
     } catch (e) {
       const error = 'An error just occurred while fetching all orders';
       throw error;
@@ -18,6 +21,10 @@ class OrderService {
     try {
       const updatedOrder = await Order.update(modifiedOrder,
         { returning: true, where: { id } });
+
+      await modifiedOrder.orderedMeals
+        .forEach(orderedMeal => updatedOrder[1][0]
+          .addMeal(orderedMeal.mealId, { through: { quantity: orderedMeal.quantity } }));
 
       return updatedOrder[1][0];
     } catch (e) {
