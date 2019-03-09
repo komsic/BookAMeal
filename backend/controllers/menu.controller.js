@@ -24,7 +24,7 @@ class MenuController {
     const { id } = req.params;
     MenuService.getSingleMenuById(Number(id))
       .then((requiredMenu) => {
-        if (Object.entries(requiredMenu).length === 0 && requiredMenu.constructor === Object) {
+        if (requiredMenu === null) {
           return res.status(404).json({
             status: 'menu of this id does not exist',
             data: requiredMenu,
