@@ -43,13 +43,17 @@ const operatorsAliases = {
 };
 
 const config = Config[env];
-config.operatorsAliases = operatorsAliases;
+config.operatorsAliases = false;
 const db = {};
 
 const basename = path.basename(__filename);
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], { operatorsAliases });
+  sequelize = new Sequelize(process.env[config.use_env_variable], {
+    operatorsAliases: false,
+    max: 10,
+    idleTimeoutMillis: 30000,
+  });
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
