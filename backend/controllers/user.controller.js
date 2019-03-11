@@ -31,7 +31,7 @@ class UserController {
       expiresIn: 86400,
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       auth: true,
       token,
     });
