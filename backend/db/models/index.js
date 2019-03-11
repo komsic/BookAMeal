@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import Config from '../config/config';
+import Config from '../config/configuration';
 
 const env = process.env.NODE_ENV || 'development';
 const { Op } = Sequelize;

@@ -1,46 +1,47 @@
+/* eslint-disable no-unused-vars */
 const now = new Date();
 
 export default {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert('Orders', [
     {
-      customerName: 'Harry Potter',
+      totalAmount: 5600,
       orderStatus: 'DISPATCHED',
-      menuId: 1,
+      userId: 1,
       createdAt: now,
       updatedAt: now,
     },
     {
-      customerName: 'Harry Potter',
+      totalAmount: 4200,
       orderStatus: 'DISPATCHED',
-      menuId: 2,
+      userId: 2,
       createdAt: now,
       updatedAt: now,
     },
     {
-      customerName: 'Katnis Everdeen',
+      totalAmount: 14500,
       orderStatus: 'DISPATCHED',
-      menuId: 2,
+      userId: 2,
       createdAt: now,
       updatedAt: now,
     },
     {
-      customerName: 'Ron Weasley',
+      totalAmount: 14400,
       orderStatus: 'DELIVERED',
-      menuId: 1,
+      userId: 1,
       createdAt: now,
       updatedAt: now,
     },
     {
-      customerName: 'Haymitch Abernacle',
+      totalAmount: 15150,
       orderStatus: 'BEING PROCESSED',
-      menuId: 1,
+      userId: 1,
       createdAt: now,
       updatedAt: now,
     },
     {
-      customerName: 'Lord Voldermont',
+      totalAmount: 7000,
       orderStatus: 'CANCELED',
-      menuId: 2,
+      userId: 2,
       createdAt: now,
       updatedAt: now,
     },

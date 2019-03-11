@@ -29,12 +29,19 @@ class Validator {
     return this.Joi.array().items(this.getMealSchema()).min(1).label(label);
   }
 
+  // getMenuSchema() {
+  //   return this.Joi.object().options({ abortEarly: false }).keys({
+  //     id: this.getPositiveNonZeroNumberSchema(),
+  //     name: this.getStringSchema('Menu name'),
+  //     meals: this.getMealArraySchema('Menu meals').optional(),
+  //   }).or('id', 'name');
+  // }
+
   getMenuSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
-      id: this.getPositiveNonZeroNumberSchema(),
-      name: this.getStringSchema('Menu name'),
-      meals: this.getMealArraySchema('Menu meals').optional(),
-    }).or('id', 'name');
+      userId: this.getPositiveNonZeroNumberSchema().required(),
+      meals: this.Joi.array().items(this.getPositiveNonZeroNumberSchema()).min(1).required(),
+    });
   }
 
   getOrderMealShema() {
@@ -60,6 +67,16 @@ class Validator {
         .when('id', { is: null, then: Joi.required() }),
       menuId: this.getPositiveNonZeroNumberSchema().label('Order menu id'),
     }).label('order');
+  }
+
+  getUserSchema() {
+    return this.Joi.object().options({ abortEarly: false }).keys({
+      name: this.getStringSchema('user name'),
+      description: this.getStringSchema('user name'),
+      isAdmin: this.Joi.boolean(),
+      email: this.Joi.string().email(),
+      password: this.Joi.string(),
+    });
   }
 }
 

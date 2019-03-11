@@ -1,5 +1,8 @@
 const path = require('path');
+const config = require('dotenv').config;
+config();
 
+console.log(process.env.NODE_ENV);
 module.exports = {
   "config": path.resolve('./backend/db/config', 'config.json'),
   "models-path": path.resolve('./dist/db/models'),

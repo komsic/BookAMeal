@@ -11,6 +11,7 @@ const validator = () => {
     '/meals': validatorSchema.getMealSchema(),
     '/orders': validatorSchema.getOrderSchema(),
     '/menu': validatorSchema.getMenuSchema(),
+    '/auth': validatorSchema.getUserSchema(),
   };
 
   const validationOptions = {
@@ -26,7 +27,7 @@ const validator = () => {
       const splitRoute = route.split('/');
       const id = splitRoute[splitRoute.length - 1];
 
-      if (!(id === 'meals' || id === 'orders' || id === 'menu' || id === '')) {
+      if (!(id === 'meals' || id === 'orders' || id === 'menu' || id === 'auth' || id === '')) {
         if (method !== 'put') {
           return Joi.validate(id, validatorSchema.getPositiveNonZeroNumberSchema().label('id'), (err, value) => {
             if (err) {
