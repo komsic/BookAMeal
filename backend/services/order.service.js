@@ -12,6 +12,8 @@ class OrderService {
         },
       });
     } catch (e) {
+      console.log(e);
+
       const error = 'An error just occurred while fetching all orders';
       throw error;
     }
@@ -36,7 +38,7 @@ class OrderService {
   static async makeNewOrder(order) {
     try {
       const newOrder = await Order.create(order);
-      await order.orderedMeals.forEach(orderedMeal => newOrder.addMeal(orderedMeal.mealId,
+      order.orderedMeals.forEach(orderedMeal => newOrder.addMeal(orderedMeal.mealId,
         { through: { quantity: orderedMeal.quantity } }));
 
       return newOrder;

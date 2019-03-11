@@ -10,16 +10,21 @@ export default {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    inMenu: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     quantity: {
       type: Sequelize.INTEGER,
     },
     price: {
       type: Sequelize.INTEGER,
     },
-    menuId: {
+    userId: {
       type: Sequelize.INTEGER,
       references: {
-        model: 'Menus',
+        model: 'Users',
         key: 'id',
       },
     },
@@ -32,5 +37,6 @@ export default {
       type: Sequelize.DATE,
     },
   }),
+  // eslint-disable-next-line no-unused-vars
   down: (queryInterface, Sequelize) => queryInterface.dropTable('Meals'),
 };

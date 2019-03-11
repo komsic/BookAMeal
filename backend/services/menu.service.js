@@ -1,15 +1,18 @@
 import db from '../db/models';
 
-const { Menu } = db;
+const { Meal } = db;
 
 class MenuService {
-  static async getAllMenu() {
+  static async fetchAllMenu() {
     try {
-      return await Menu.findAll({
-        include: [{
-          model: db.Meal,
-          as: 'Meals',
-        }],
+      return await Meal.findAll({
+        where: {
+          inMenu: true,
+        },
+        include: {
+          model: db.Order,
+          as: 'Orders',
+        },
       });
     } catch (e) {
       const error = 'An error just occurred while fetching the menu';
@@ -17,37 +20,47 @@ class MenuService {
     }
   }
 
-  static async getSingleMenuById(id) {
+  static async postMenu(meals, userId) {
     try {
-      return await Menu.findByPk(id, {
-        include: [{
-          model: db.Meal,
-          as: 'Meals',
-        }],
+      const oldMenuMeals = await Meal.findAll({
+        where: {
+          inMenu: true,
+          userId,
+        },
+      });
+
+      MenuService.updateMealsMenu(oldMenuMeals, false);
+      MenuService.updateMealsMenu(meals, true);
+
+      return await Meal.findAll({
+        where: {
+          inMenu: true,
+        },
       });
     } catch (e) {
-      const error = 'An error just occurred while fetching the menu of this id';
+      const error = 'An error just occurred while posting the menu';
       throw error;
     }
   }
 
-  static async modifySingleMenuById(modifiedMenu) {
-    try {
-      const updatedMenu = await Menu.update(modifiedMenu,
-        { returning: true, where: { id: modifiedMenu.id } });
-
-      return updatedMenu[1][0];
-    } catch (e) {
-      const error = 'An error just occurred while fetching the menu';
-      throw error;
-    }
+  static updateMealsMenu(meals, isMenu) {
+    meals.forEach((meal) => {
+      MenuService.updateMealMenu(meal, isMenu);
+    });
   }
 
-  static async setUpNewMenu(menu) {
+  static async updateMealMenu(meal, isMenu) {
     try {
-      return await Menu.create(menu);
+      meal.then((m) => {
+        console.log(m);
+
+        // eslint-disable-next-line no-param-reassign
+        m.isMenu = isMenu;
+        Meal.update(m, { where: { id: meal.id } });
+      });
     } catch (e) {
-      const error = 'An error just occurred while posting a new menu';
+      console.log(e);
+      const error = 'An error just occurred while updating the meal menu';
       throw error;
     }
   }

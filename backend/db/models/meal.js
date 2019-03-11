@@ -10,6 +10,11 @@ const meal = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    inMenu: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     quantity: DataTypes.INTEGER,
     price: DataTypes.INTEGER,
   }, {
@@ -18,9 +23,9 @@ const meal = (sequelize, DataTypes) => {
     timestamps: true,
   });
   Meal.associate = (models) => {
-    Meal.belongsTo(models.Menu, {
-      foreignKey: 'menuId',
-      as: 'Menu',
+    Meal.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'User',
     });
     Meal.belongsToMany(models.Order, {
       through: models.OrderMeal,

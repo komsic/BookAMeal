@@ -10,8 +10,8 @@ const order = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    customerName: {
-      type: DataTypes.STRING,
+    totalAmount: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   }, {
@@ -20,9 +20,9 @@ const order = (sequelize, DataTypes) => {
     timestamps: true,
   });
   Order.associate = (models) => {
-    Order.belongsTo(models.Menu, {
-      foreignKey: 'menuId',
-      as: 'Menus',
+    Order.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'Users',
     });
     Order.belongsToMany(models.Meal, {
       through: models.OrderMeal,

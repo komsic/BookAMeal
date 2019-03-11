@@ -1,25 +1,30 @@
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Orders', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    orderStatus: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    totalAmount: {
-      type: Sequelize.INTEGER,
+    email: {
+      type: Sequelize.STRING,
       allowNull: false,
     },
-    userId: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'Users',
-        key: 'id',
-      },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: Sequelize.STRING,
+    },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
     createdAt: {
       allowNull: false,
@@ -31,5 +36,5 @@ export default {
     },
   }),
   // eslint-disable-next-line no-unused-vars
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Orders'),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users'),
 };
