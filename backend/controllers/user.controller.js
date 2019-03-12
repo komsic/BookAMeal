@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 
 import UserService from '../services/user.service';
-import ResponseTransformer from '../utils/response.transformer';
 
 const { config } = dotenv;
 config();
@@ -80,69 +79,69 @@ class UserController {
     });
   }
 
-  static async getAllUser(req, res) {
-    UserService.getAllUser()
-      .then((allUser) => {
-        if (allUser.length === 0) {
-          return res.status(200).json({
-            status: 'successful but there is no user in this list',
-            data: allUser,
-          });
-        }
+  // static async getAllUser(req, res) {
+  //   UserService.getAllUser()
+  //     .then((allUser) => {
+  //       if (allUser.length === 0) {
+  //         return res.status(200).json({
+  //           status: 'successful but there is no user in this list',
+  //           data: allUser,
+  //         });
+  //       }
 
-        return res.status(200).json({
-          status: 'success',
-          data: allUser,
-        });
-      }).catch(error => res.status(500)
-        .json(ResponseTransformer.transform(500, error.error)));
-  }
+  //       return res.status(200).json({
+  //         status: 'success',
+  //         data: allUser,
+  //       });
+  //     }).catch(error => res.status(500)
+  //       .json(ResponseTransformer.transform(500, error.error)));
+  // }
 
-  static async getSingleUserById(req, res) {
-    const { id } = req.params;
-    UserService.getSingleUserById(Number(id))
-      .then((requiredUser) => {
-        if (requiredUser === null) {
-          return res.status(404).json({
-            status: 'user of this id does not exist',
-            data: requiredUser,
-          });
-        }
+  // static async getSingleUserById(req, res) {
+  //   const { id } = req.params;
+  //   UserService.getSingleUserById(Number(id))
+  //     .then((requiredUser) => {
+  //       if (requiredUser === null) {
+  //         return res.status(404).json({
+  //           status: 'user of this id does not exist',
+  //           data: requiredUser,
+  //         });
+  //       }
 
-        return res.json({
-          status: 'success',
-          data: requiredUser,
-        }).status(200);
-      }).catch(error => res.status(500)
-        .json(ResponseTransformer.transform(500, error.error)));
-  }
+  //       return res.json({
+  //         status: 'success',
+  //         data: requiredUser,
+  //       }).status(200);
+  //     }).catch(error => res.status(500)
+  //       .json(ResponseTransformer.transform(500, error.error)));
+  // }
 
-  static async modifySingleUserById(req, res) {
-    UserService.modifySingleUserById(req.body)
-      .then(((modifiedUser) => {
-        if (modifiedUser === undefined) {
-          return res.status(404).json({
-            status: 'user of this id does not exist',
-            data: {},
-          });
-        }
+  // static async modifySingleUserById(req, res) {
+  //   UserService.modifySingleUserById(req.body)
+  //     .then(((modifiedUser) => {
+  //       if (modifiedUser === undefined) {
+  //         return res.status(404).json({
+  //           status: 'user of this id does not exist',
+  //           data: {},
+  //         });
+  //       }
 
-        return res.json({
-          status: 'success',
-          data: modifiedUser,
-        }).status(200);
-      })).catch(error => res.status(500)
-        .json(ResponseTransformer.transform(500, error.error)));
-  }
+  //       return res.json({
+  //         status: 'success',
+  //         data: modifiedUser,
+  //       }).status(200);
+  //     })).catch(error => res.status(500)
+  //       .json(ResponseTransformer.transform(500, error.error)));
+  // }
 
-  static async setUpNewUser(req, res) {
-    UserService.setUpNewUser(req.body)
-      .then(newUser => res.json({
-        status: 'success',
-        data: newUser,
-      }).status(201)).catch(error => res.status(500)
-        .json(ResponseTransformer.transform(500, error.error)));
-  }
+  // static async setUpNewUser(req, res) {
+  //   UserService.setUpNewUser(req.body)
+  //     .then(newUser => res.json({
+  //       status: 'success',
+  //       data: newUser,
+  //     }).status(201)).catch(error => res.status(500)
+  //       .json(ResponseTransformer.transform(500, error.error)));
+  // }
 }
 
 export default UserController;
