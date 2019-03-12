@@ -1,81 +1,66 @@
-// import chai from 'chai';
-// import chaiHttp from 'chai-http';
-// import app from '../backend/index';
-// import dummyData from '../backend/utils/dummyData';
-// import Menu from '../backend/models/menu.model';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../backend/index';
+import MenuService from '../backend/services/menu.service';
 
-// chai.use(chaiHttp);
-// const { expect } = chai;
-// const API_PREFIX = '/api/v1/menu';
+chai.use(chaiHttp);
+const { expect } = chai;
+const API_PREFIX = '/api/v1/menu';
 
-// /* global describe it */
-// describe('Menu GET/', () => {
-//   it('it should get all menu', (done) => {
-//     const expectedMenuLength = dummyData.menu.length;
+/* global describe it */
+describe('Menu GET/', () => {
+  it('it should get all menu', (done) => {
+    MenuService.fetchAllMenu()
+      .then((menu) => {
+        const expectedMenuLength = menu.length;
 
-//     chai.request(app)
-//       .get(API_PREFIX)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
-//         expect(res.body).to.have.property('data').with.lengthOf(expectedMenuLength);
-//         done();
-//       });
-//   });
-
-//   it('get all menu that return with zero menu should indicate with a message', (done) => {
-//     const copyOfDummyMenu = dummyData.menu.slice();
-//     dummyData.menu = [];
-
-//     chai.request(app)
-//       .get(API_PREFIX)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
-//         expect(res.body).to.have.property('data').with.lengthOf(0);
-//         expect(res.body).to.have.property('status');
-//         const { status } = res.body;
-//         expect(status).to.equal('successful but there is no menu in this list');
-//         dummyData.menu = copyOfDummyMenu.slice();
-//         done();
-//       });
-//   });
-// });
+        chai.request(app)
+          .get(API_PREFIX)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body).to.have.property('data').with.lengthOf(expectedMenuLength);
+            done();
+          });
+      });
+  });
+});
 
 // describe('Menu GET/:id', () => {
 //   it('it should return a menu with the specified id', (done) => {
 //     const specifiedId = 1;
-//     const specifiedMenu = dummyData.menu.find(_menu => _menu.id === specifiedId);
 
 //     chai.request(app)
 //       .get(`${API_PREFIX}/${specifiedId}`)
 //       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
+//         console.log(res.body);
 
-//         const { data } = res.body;
-//         expect(data).to.have.property('name', specifiedMenu.name);
-//         expect(data).to.have.property('meals');
-//         expect(data).to.have.property('id', specifiedMenu.id);
+//         // expect(res).to.have.status(200);
+//         // expect(res.body).to.be.a('object');
+
+//         // const { data } = res.body;
+//         // expect(data).to.have.property('name');
+//         // expect(data).to.have.property('meals');
+//         // expect(data).to.have.property('id', specifiedId);
 //         done();
 //       });
 //   });
 
-//   it('it should return error if id does not exist', (done) => {
-//     const specifiedId = 101;
+// it('it should return error if id does not exist', (done) => {
+//   const specifiedId = 101;
 
-//     chai.request(app)
-//       .get(`${API_PREFIX}/${specifiedId}`)
-//       .end((err, res) => {
-//         expect(res).to.have.status(404);
-//         expect(res.body).to.be.a('object');
+//   chai.request(app)
+//     .get(`${API_PREFIX}/${specifiedId}`)
+//     .end((err, res) => {
+//       expect(res).to.have.status(404);
+//       expect(res.body).to.be.a('object');
 
-//         const { status } = res.body;
-//         expect(status).to.equal('menu of this id does not exist');
+//       const { status } = res.body;
+//       expect(status).to.equal('menu of this id does not exist');
 
-//         done();
-//       });
-//   });
+//       done();
+//     });
+// });
 // });
 
 // describe('Menu PUT/:id', () => {
