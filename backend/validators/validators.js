@@ -71,11 +71,11 @@ class Validator {
 
   getUserSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
-      name: this.getStringSchema('user name'),
+      name: this.getStringSchema('user name').required(),
       description: this.getStringSchema('user name'),
-      isAdmin: this.Joi.boolean(),
-      email: this.Joi.string().email(),
-      password: this.Joi.string(),
+      isAdmin: this.Joi.boolean().required().label('isAdmin'),
+      email: this.Joi.string().email().required().label('user email'),
+      password: this.Joi.string().required().label('user password'),
     });
   }
 }
