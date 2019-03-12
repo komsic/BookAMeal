@@ -20,7 +20,8 @@ class Validator {
         .when('id', { is: null, then: Joi.required() }),
       quantity: this.getPositiveNonZeroNumberSchema(),
       price: this.getPositiveNonZeroNumberSchema(),
-      menuId: this.getPositiveNonZeroNumberSchema().label('Meal menu id'),
+      userId: this.getPositiveNonZeroNumberSchema().label('Meal user id'),
+      inMenu: this.Joi.boolean().label('inMenu'),
     }).min(2)
       .label('meal');
   }
