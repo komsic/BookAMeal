@@ -13,9 +13,9 @@ export default {
     dialect: 'postgres',
   },
   test: {
-    username: 'postgres',
-    password: 'postgres',
-    database: 'mealtest',
+    username: 'mavis',
+    password: 'mavis',
+    database: 'postgrestest',
     host: '127.0.0.1',
     dialect: 'postgres',
   },

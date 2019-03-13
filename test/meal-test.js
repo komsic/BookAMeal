@@ -1,188 +1,174 @@
-// import chai from 'chai';
-// import chaiHttp from 'chai-http';
-// import app from '../backend/index';
-// import dummyData from '../backend/utils/dummyData';
-// import Meal from '../backend/models/meal.model';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../backend/index';
+import MealService from '../backend/services/meal.service';
 
-// chai.use(chaiHttp);
-// const { expect } = chai;
-// const API_PREFIX = '/api/v1/meals';
+chai.use(chaiHttp);
+const { expect } = chai;
+const API_PREFIX = '/api/v1/meals';
 
-// /* global describe it */
-// describe('Meal GET /', () => {
-//   it('should get all meals', (done) => {
-//     const expectedMealLength = dummyData.meals.length;
-//     chai.request(app)
-//       .get(`${API_PREFIX}`)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
-//         expect(res.body).to.have.property('data').with.lengthOf(expectedMealLength);
-//         done();
-//       });
-//   });
+/* global describe it */
+describe('Meal GET /', () => {
+  it('should get all meals', (done) => {
+    MealService.fetchAllMeals()
+      .then((meals) => {
+        const expectedMealLength = meals.length;
+        chai.request(app)
+          .get(`${API_PREFIX}`)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body).to.have.property('data').with.lengthOf(expectedMealLength);
+            done();
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      });
+  });
+});
 
-//   it('get all meals that return with zero meals should indicate with a message', (done) => {
-//     const copyOfDummyMeals = dummyData.meals.slice();
-//     dummyData.meals = [];
+describe('Meal POST /', () => {
+  it('it should add a meal', (done) => {
+    const newMeal = {
+      name: 'Moi Moi',
+      price: 850,
+      quantity: 5,
+      userId: 1,
+      inMenu: true,
+    };
 
-//     chai.request(app)
-//       .get(API_PREFIX)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
-//         expect(res.body).to.have.property('data').with.lengthOf(0);
-//         expect(res.body).to.have.property('status');
-//         const { status } = res.body;
-//         expect(status).to.equal('successful but there is no meal in this list');
-//         dummyData.meals = copyOfDummyMeals.slice();
-//         done();
-//       });
-//   });
-// });
+    chai.request(app)
+      .post(`${API_PREFIX}`)
+      .send(newMeal)
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        expect(res.body).to.be.an('object');
+        const { data } = res.body;
+        expect(data).to.have.property('name', newMeal.name);
+        expect(data).to.have.property('price', newMeal.price);
+        expect(data).to.have.property('quantity', newMeal.quantity);
+        expect(data).to.have.property('inMenu');
+        expect(data).to.have.property('userId', newMeal.userId);
+        done();
+      });
+  });
+});
 
-// describe('Meal POST /', () => {
-//   it('it should add a meal', (done) => {
-//     const newMeal = new Meal();
-//     newMeal.name = 'Moi Moi';
-//     newMeal.price = 850;
-//     newMeal.quantity = 5;
+describe('Meal GET/:id', () => {
+  it('it should return a meal with the provided id', (done) => {
+    const specifiedId = 1;
+    MealService.getSingleMeal(specifiedId)
+      .then((m) => {
+        chai.request(app)
+          .get(`${API_PREFIX}/${specifiedId}`)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
 
-//     chai.request(app)
-//       .post(`${API_PREFIX}`)
-//       .send(newMeal)
-//       .end((err, res) => {
-//         expect(res).to.have.status(201);
-//         expect(res.body).to.be.an('object');
-//         const { data } = res.body;
-//         expect(data).to.have.property('name', newMeal.name);
-//         expect(data).to.have.property('price', newMeal.price);
-//         expect(data).to.have.property('quantity', newMeal.quantity);
-//         done();
-//       });
-//   });
-// });
+            const { data } = res.body;
+            expect(data).to.have.property('name', m.name);
+            expect(data).to.have.property('price', m.price);
+            expect(data).to.have.property('inMenu', m.inMenu);
+            expect(data).to.have.property('quantity', m.quantity);
+            expect(data).to.have.property('id', m.id);
+            expect(data).to.have.property('userId', m.userId);
+            expect(data).to.have.property('Orders');
+            done();
+          });
+      }).catch((err) => {
+        console.log(err);
+        done();
+      });
+  });
 
-// describe('Meal GET/:id', () => {
-//   it('it should return a meal with the provided id', (done) => {
-//     const specifiedId = 1;
-//     const intendedMeal = dummyData.meals.find(meal => meal.id === specifiedId);
+  it('it should return error if id does not exist', (done) => {
+    const specifiedId = 101;
 
-//     chai.request(app)
-//       .get(`${API_PREFIX}/${specifiedId}`)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
+    chai.request(app)
+      .get(`${API_PREFIX}/${specifiedId}`)
+      .end((err, res) => {
+        expect(res).to.have.status(500);
+        expect(res.body).to.be.a('object');
 
-//         const { data } = res.body;
-//         expect(data).to.have.property('name', intendedMeal.name);
-//         expect(data).to.have.property('price', intendedMeal.price);
-//         done();
-//       });
-//   });
+        done();
+      });
+  });
+});
 
-//   it('it should return error if id does not exist', (done) => {
-//     const specifiedId = 101;
+describe('Meal PUT/:id', () => {
+  it('it should update meal', (done) => {
+    const specifiedId = 1;
+    const mealTobeUpdated = {
+      name: 'Banga Soup',
+      price: 1000,
+      quantity: 8,
+    };
 
-//     chai.request(app)
-//       .get(`${API_PREFIX}/${specifiedId}`)
-//       .end((err, res) => {
-//         expect(res).to.have.status(404);
-//         expect(res.body).to.be.a('object');
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(mealTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
 
-//         const { status } = res.body;
-//         expect(status).to.equal('meal of this id does not exist');
+        const { data } = res.body;
+        expect(data).to.have.property('name', mealTobeUpdated.name);
+        expect(data).to.have.property('price', mealTobeUpdated.price);
+        expect(data).to.have.property('quantity', mealTobeUpdated.quantity);
 
-//         done();
-//       });
-//   });
-// });
+        done();
+      });
+  });
 
-// describe('Meal PUT/:id', () => {
-//   it('it should update meal', (done) => {
-//     const specifiedId = 1;
-//     const mealTobeUpdated = dummyData.meals.find(meal => meal.id === specifiedId);
-//     mealTobeUpdated.name = 'Banga Soup';
-//     mealTobeUpdated.price = 1000;
-//     mealTobeUpdated.quantity = 8;
+  it('it should return error if id does not exist', (done) => {
+    const specifiedId = 101;
+    const mealTobeUpdated = {
+      name: 'Small Chop',
+      price: 1000,
+      quantity: 8,
+    };
 
-//     chai.request(app)
-//       .put(`${API_PREFIX}/${specifiedId}`)
-//       .send(mealTobeUpdated)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(mealTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body).to.be.a('object');
 
-//         const { data } = res.body;
-//         expect(data).to.have.property('name', mealTobeUpdated.name);
-//         expect(data).to.have.property('price', mealTobeUpdated.price);
-//         expect(data).to.have.property('quantity', mealTobeUpdated.quantity);
+        const { status } = res.body;
+        expect(status).to.equal('meal of this id does not exist');
 
-//         const updatedMeal = dummyData.meals.find(meal => meal.id === specifiedId);
-//         expect(data).to.have.property('name', updatedMeal.name);
-//         expect(data).to.have.property('price', updatedMeal.price);
-//         expect(data).to.have.property('quantity', updatedMeal.quantity);
-//         done();
-//       });
-//   });
+        done();
+      });
+  });
+});
 
-//   it('it should return error if id does not exist', (done) => {
-//     const specifiedId = 101;
-//     const mealTobeUpdated = new Meal();
-//     mealTobeUpdated.name = 'Banga Soup';
-//     mealTobeUpdated.price = 1000;
-//     mealTobeUpdated.quantity = 8;
+describe('Meal DELETE/:id', () => {
+  it('it should delete the meal with the specified id', (done) => {
+    const specifiedId = 6;
 
-//     chai.request(app)
-//       .put(`${API_PREFIX}/${specifiedId}`)
-//       .send(mealTobeUpdated)
-//       .end((err, res) => {
-//         expect(res).to.have.status(404);
-//         expect(res.body).to.be.a('object');
+    chai.request(app)
+      .delete(`${API_PREFIX}/${specifiedId}`)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
 
-//         const { status } = res.body;
-//         expect(status).to.equal('meal of this id does not exist');
+        done();
+      });
+  });
 
-//         done();
-//       });
-//   });
-// });
+  it('it should return error if id does not exist', (done) => {
+    const specifiedId = 101;
 
-// describe('Meal DELETE/:id', () => {
-//   it('it should delete the meal with the specified id', (done) => {
-//     const expectedTotalMealLength = dummyData.meals.length - 1;
+    chai.request(app)
+      .delete(`${API_PREFIX}/${specifiedId}`)
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body).to.be.a('object');
 
-//     const specifiedId = 1;
-//     const intendedMealToBeDeleted = dummyData.meals.find(meal => meal.id === specifiedId);
-
-//     chai.request(app)
-//       .delete(`${API_PREFIX}/${specifiedId}`)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
-
-//         const { data } = res.body;
-//         expect(data).to.have.property('name', intendedMealToBeDeleted.name);
-//         expect(data).to.have.property('price', intendedMealToBeDeleted.price);
-//         expect(dummyData.meals.length).to.equal(expectedTotalMealLength);
-
-//         done();
-//       });
-//   });
-
-//   it('it should return error if id does not exist', (done) => {
-//     const specifiedId = 101;
-
-//     chai.request(app)
-//       .put(`${API_PREFIX}/${specifiedId}`)
-//       .end((err, res) => {
-//         expect(res).to.have.status(422);
-//         expect(res.body).to.be.a('object');
-
-//         const { status } = res.body;
-//         expect(status).to.equal('failed');
-
-//         done();
-//       });
-//   });
-// });
+        done();
+      });
+  });
+});

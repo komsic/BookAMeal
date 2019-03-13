@@ -20,7 +20,8 @@ class Validator {
         .when('id', { is: null, then: Joi.required() }),
       quantity: this.getPositiveNonZeroNumberSchema(),
       price: this.getPositiveNonZeroNumberSchema(),
-      menuId: this.getPositiveNonZeroNumberSchema().label('Meal menu id'),
+      userId: this.getPositiveNonZeroNumberSchema().label('Meal user id'),
+      inMenu: this.Joi.boolean().label('inMenu'),
     }).min(2)
       .label('meal');
   }
@@ -58,24 +59,25 @@ class Validator {
   getOrderSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
       id: this.getPositiveNonZeroNumberSchema().allow(null).default(null).label('Order id'),
-      customerName: this.getStringSchema('Customer name')
+      totalAmount: this.getPositiveNonZeroNumberSchema().label('total order amount')
         .when('id', { is: null, then: Joi.required() }),
       orderStatus: this.getStringSchema('Order Status').uppercase()
         .valid('CANCELLED', 'BEING PROCESSED', 'DISPATCHED', 'DELIVERED')
         .when('id', { is: null, then: Joi.required() }),
       orderedMeals: this.getOrderMealArrayShema('Ordered meals')
         .when('id', { is: null, then: Joi.required() }),
-      menuId: this.getPositiveNonZeroNumberSchema().label('Order menu id'),
+      userId: this.getPositiveNonZeroNumberSchema().label('Order caterer id')
+        .when('id', { is: null, then: Joi.required() }),
     }).label('order');
   }
 
   getUserSchema() {
     return this.Joi.object().options({ abortEarly: false }).keys({
       name: this.getStringSchema('user name'),
-      description: this.getStringSchema('user name'),
-      isAdmin: this.Joi.boolean(),
-      email: this.Joi.string().email(),
-      password: this.Joi.string(),
+      description: this.getStringSchema('user description'),
+      isAdmin: this.Joi.boolean().label('isAdmin'),
+      email: this.Joi.string().email().required().label('user email'),
+      password: this.Joi.string().required().label('user password'),
     });
   }
 }

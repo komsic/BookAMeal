@@ -3,21 +3,21 @@ import db from '../db/models';
 const { User } = db;
 
 class UserService {
-  static async getAllUser() {
-    try {
-      return await User.findAll({
-        include: [{
-          model: db.Meal,
-          as: 'Meals',
-        }],
-      });
-    } catch (e) {
-      console.log(e);
+  // static async getAllUser() {
+  //   try {
+  //     return await User.findAll({
+  //       include: [{
+  //         model: db.Meal,
+  //         as: 'Meals',
+  //       }],
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
 
-      const error = 'An error just occurred while fetching the user';
-      throw error;
-    }
-  }
+  //     const error = 'An error just occurred while fetching the user';
+  //     throw error;
+  //   }
+  // }
 
   static async getSingleUserById(id) {
     try {
@@ -33,17 +33,17 @@ class UserService {
     }
   }
 
-  static async modifySingleUserById(modifiedUser) {
-    try {
-      const updatedUser = await User.update(modifiedUser,
-        { returning: true, where: { id: modifiedUser.id } });
+  // static async modifySingleUserById(modifiedUser) {
+  //   try {
+  //     const updatedUser = await User.update(modifiedUser,
+  //       { returning: true, where: { id: modifiedUser.id } });
 
-      return updatedUser[1][0];
-    } catch (e) {
-      const error = 'An error just occurred while fetching the user';
-      throw error;
-    }
-  }
+  //     return updatedUser[1][0];
+  //   } catch (e) {
+  //     const error = 'An error just occurred while fetching the user';
+  //     throw error;
+  //   }
+  // }
 
   static async setUpNewUser(user) {
     try {

@@ -1,123 +1,106 @@
-// import chai from 'chai';
-// import chaiHttp from 'chai-http';
-// import app from '../backend/index';
-// import dummyData from '../backend/utils/dummyData';
-// import Order from '../backend/models/order.model';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../backend/index';
+import OrderService from '../backend/services/order.service';
 
-// chai.use(chaiHttp);
-// const { expect } = chai;
-// const API_PREFIX = '/api/v1/orders';
+chai.use(chaiHttp);
+const { expect } = chai;
+const API_PREFIX = '/api/v1/orders';
 
-// /* global describe it */
-// describe('Order GET /', () => {
-//   it('it should get all orders', (done) => {
-//     const expectedOrderLength = dummyData.orders.length;
-//     chai.request(app)
-//       .get(`${API_PREFIX}`)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
-//         expect(res.body).to.have.property('data').with.lengthOf(expectedOrderLength);
-//         done();
-//       });
-//   });
+/* global describe it */
+describe('Order GET /', () => {
+  it('it should get all orders', (done) => {
+    OrderService.getAllOrder()
+      .then((orders) => {
+        const expectedOrderLength = orders.length;
+        chai.request(app)
+          .get(`${API_PREFIX}`)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body).to.have.property('data').with.lengthOf(expectedOrderLength);
+            done();
+          });
+      });
+  });
+});
 
-//   it('get all orders that return with zero order should indicate with a message', (done) => {
-//     const copyOfDummyOrders = dummyData.orders.slice();
-//     dummyData.orders = [];
+describe('Order PUT/:id', () => {
+  const orderTobeUpdated = {
+    id: 2,
+    totalAmount: 5,
+    orderStatus: 'BEING PROCESSED',
+    orderedMeals: [
+      {
+        mealId: 1,
+        quantity: 5,
+      },
+      {
+        mealId: 2,
+        quantity: 5,
+      },
+    ],
+  };
 
-//     chai.request(app)
-//       .get(API_PREFIX)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
-//         expect(res.body).to.have.property('data').with.lengthOf(0);
-//         expect(res.body).to.have.property('status');
-//         const { status } = res.body;
-//         expect(status).to.equal('successful but there is no order in this list');
-//         dummyData.orders = copyOfDummyOrders.slice();
-//         done();
-//       });
-//   });
-// });
+  it('it should update order with the specified id', (done) => {
+    const specifiedId = 2;
 
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(orderTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
 
-// describe('Order PUT/:id', () => {
-//   it('it should update order with the specified id', (done) => {
-//     const specifiedId = 1;
-//     const orderTobeUpdated = dummyData.orders.find(order => order.id === specifiedId);
-//     orderTobeUpdated.customerName = 'Matrim Cauthon';
-//     orderTobeUpdated.catererName = 'The Gates Of Heaven';
-//     orderTobeUpdated.orderStatus = 'BEING PROCESSED';
-//     orderTobeUpdated.meals = dummyData.meals;
+        done();
+      });
+  });
 
-//     chai.request(app)
-//       .put(`${API_PREFIX}/${specifiedId}`)
-//       .send(orderTobeUpdated)
-//       .end((err, res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body).to.be.a('object');
+  it('it should return error if id does not exist', (done) => {
+    const specifiedId = 101;
+    orderTobeUpdated.id = specifiedId;
 
-//         const { data } = res.body;
-//         expect(data).to.have.property('customerName', orderTobeUpdated.customerName);
-//         expect(data).to.have.property('catererName', orderTobeUpdated.catererName);
-//         expect(data).to.have.property('orderStatus', orderTobeUpdated.orderStatus);
-//         expect(data).to.have.property('id', specifiedId);
-//         expect(data).to.have.property('meals').with.lengthOf(dummyData.meals.length);
-//         done();
-//       });
-//   });
+    chai.request(app)
+      .put(`${API_PREFIX}/${specifiedId}`)
+      .send(orderTobeUpdated)
+      .end((err, res) => {
+        expect(res).to.have.status(500);
+        expect(res.body).to.be.a('object');
 
-//   it('it should return error if id does not exist', (done) => {
-//     const specifiedId = 101;
-//     const order = {
-//       id: specifiedId,
-//       meals: dummyData.meals,
-//       customerName: 'Gale Hawthorne',
-//       catererName: 'Greasey Sae Kitchen',
-//       orderStatus: 'DISPATCHED',
-//     };
-//     const orderTobeUpdated = new Order(order);
+        done();
+      });
+  });
+});
 
-//     chai.request(app)
-//       .put(`${API_PREFIX}/${specifiedId}`)
-//       .send(orderTobeUpdated)
-//       .end((err, res) => {
-//         expect(res).to.have.status(404);
-//         expect(res.body).to.be.a('object');
+describe('Order POST /', () => {
+  it('it should add a new order', (done) => {
+    const newOrder = {
+      orderedMeals: [
+        {
+          mealId: 1,
+          quantity: 5,
+        },
+        {
+          mealId: 2,
+          quantity: 5,
+        },
+      ],
+      orderStatus: 'DISPATCHED',
+      totalAmount: 5,
+      userId: 1,
+    };
 
-//         const { status } = res.body;
-//         expect(status).to.equal('order of this id does not exist');
+    chai.request(app)
+      .post(`${API_PREFIX}`)
+      .send(newOrder)
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        expect(res.body).to.be.an('object');
 
-//         done();
-//       });
-//   });
-// });
-
-// describe('Order POST /', () => {
-//   it('it should add a new order', (done) => {
-//     const order = {
-//       meals: dummyData.meals,
-//       customerName: 'Perrin Aybara',
-//       catererName: 'The Winespring Inn',
-//       orderStatus: 'DISPATCHED',
-//     };
-//     const newOrder = new Order(order);
-
-//     chai.request(app)
-//       .post(`${API_PREFIX}`)
-//       .send(newOrder)
-//       .end((err, res) => {
-//         expect(res).to.have.status(201);
-//         expect(res.body).to.be.an('object');
-
-//         const { data } = res.body;
-//         expect(data).to.have.property('customerName', newOrder.customerName);
-//         expect(data).to.have.property('catererName', newOrder.catererName);
-//         expect(data).to.have.property('orderStatus', newOrder.orderStatus);
-//         expect(data).to.have.property('meals').with.lengthOf(dummyData.meals.length);
-//         expect(data).to.have.property('id');
-//         done();
-//       });
-//   });
-// });
+        const { data } = res.body;
+        expect(data).to.have.property('orderStatus', newOrder.orderStatus);
+        expect(data).to.have.property('id');
+        done();
+      });
+  });
+});
