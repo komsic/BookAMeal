@@ -28,6 +28,7 @@ class UserService {
         }],
       });
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while fetching the user of this id';
       throw error;
     }
@@ -49,6 +50,7 @@ class UserService {
     try {
       return await User.create(user);
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while posting a new user';
       throw error;
     }
@@ -58,6 +60,7 @@ class UserService {
     try {
       return await User.findOne({ where: { email } });
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred. Could not find user with this error';
       throw error;
     }

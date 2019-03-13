@@ -15,6 +15,7 @@ class MenuService {
         },
       });
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while fetching the menu';
       throw error;
     }
@@ -38,6 +39,7 @@ class MenuService {
         },
       });
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while posting the menu';
       throw error;
     }
@@ -59,7 +61,7 @@ class MenuService {
         Meal.update(m, { where: { id: meal.id } });
       });
     } catch (e) {
-      console.log(e);
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while updating the meal menu';
       throw error;
     }

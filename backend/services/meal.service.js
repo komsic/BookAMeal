@@ -12,6 +12,7 @@ class MealService {
         },
       });
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while fetching the meals';
       throw error;
     }
@@ -21,6 +22,7 @@ class MealService {
     try {
       return await Meal.create(meal);
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while creating a meal';
       throw error;
     }
@@ -35,6 +37,7 @@ class MealService {
         },
       });
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while getting the meal';
       throw error;
     }
@@ -47,6 +50,7 @@ class MealService {
 
       return updatedMenu[1][0];
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while updating the meal';
       throw error;
     }
@@ -56,6 +60,7 @@ class MealService {
     try {
       return await Meal.destroy({ returning: true, where: { id } });
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while deleting the meal';
       throw error;
     }

@@ -12,8 +12,7 @@ class OrderService {
         },
       });
     } catch (e) {
-      console.log(e);
-
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while fetching all orders';
       throw error;
     }
@@ -30,6 +29,7 @@ class OrderService {
 
       return updatedOrder[1][0];
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while deleting the meal';
       throw error;
     }
@@ -43,6 +43,7 @@ class OrderService {
 
       return newOrder;
     } catch (e) {
+      console.log(`###################: ERROR--- ${e}`);
       const error = 'An error just occurred while deleting the meal';
       throw error;
     }
