@@ -49,7 +49,7 @@ const db = {};
 const basename = path.basename(__filename);
 let sequelize;
 if (config.use_env_variable) {
-  console.log('##############: in prod');
+  console.log(`##############: in prod- ${config.use_env_variable}`);
 
   sequelize = new Sequelize(process.env[config.use_env_variable], { dialect: 'postgres', operatorsAliases });
 } else {
