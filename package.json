@@ -4,7 +4,7 @@
   "description": "Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat.",
   "main": "backend/index.js",
   "scripts": {
-    "start": "npm run build && node ./dist/index.js && ",
+    "start": "npm run build && node ./dist/index.js && npm run sequeliz",
     "dev": "nodemon backend/index.js --exec babel-node",
     "test": "set NODE_ENV=test&& npm run build && npm run sequeliz && nyc --reporter=html --reporter=text mocha --require @babel/register --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
