@@ -15,7 +15,7 @@ export default {
   test: {
     username: 'mavis',
     password: 'mavis',
-    database: 'postgres-test',
+    database: 'postgrestest',
     host: '127.0.0.1',
     dialect: 'postgres',
   },
