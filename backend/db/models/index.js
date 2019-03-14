@@ -54,8 +54,9 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.use_env_variable, {
     dialect: config.dialect,
     protocol: 'postgres',
-    port: match[4],
-    host: match[3],
+    dialectOptions: {
+      ssl: true,
+    },
     logging: true,
     operatorsAliases,
   });
