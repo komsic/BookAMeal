@@ -52,7 +52,7 @@ if (config.use_env_variable) {
   console.log(`##############: in prod- ${config.use_env_variable}`);
 
   sequelize = new Sequelize(config.use_env_variable, {
-    dialect: 'postgres',
+    dialect: config.dialect,
     protocol: 'postgres',
     port: match[4],
     host: match[3],
