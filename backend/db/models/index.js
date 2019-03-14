@@ -57,9 +57,16 @@ if (config.use_env_variable) {
     dialectOptions: {
       ssl: true,
     },
-    logging: true,
     operatorsAliases,
   });
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Connection has been established successfully.');
+    })
+    .catch((err) => {
+      console.error('Unable to connect to the database:', err);
+    });
 } else {
   console.log('##############: in other');
   sequelize = new Sequelize(config.database, config.username, config.password, config);
