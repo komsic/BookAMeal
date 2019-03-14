@@ -51,7 +51,14 @@ let sequelize;
 if (config.use_env_variable) {
   console.log(`##############: in prod- ${config.use_env_variable}`);
 
-  sequelize = new Sequelize(config.use_env_variable, { dialect: 'postgres', operatorsAliases });
+  sequelize = new Sequelize(config.use_env_variable, {
+    dialect: 'postgres',
+    protocol: 'postgres',
+    port: match[4],
+    host: match[3],
+    logging: true,
+    operatorsAliases,
+  });
 } else {
   console.log('##############: in other');
   sequelize = new Sequelize(config.database, config.username, config.password, config);
