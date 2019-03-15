@@ -51,14 +51,7 @@ let sequelize;
 if (config.use_env_variable) {
   console.log(`##############: in prod- ${config.use_env_variable}`);
 
-  sequelize = new Sequelize(config.use_env_variable, {
-    dialect: config.dialect,
-    protocol: 'postgres',
-    dialectOptions: {
-      ssl: true,
-    },
-    operatorsAliases,
-  });
+  sequelize = new Sequelize(config.use_env_variable);
   sequelize
     .authenticate()
     .then(() => {
