@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 const now = new Date();
 
-export default {
+module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert('Orders', [
     {
       totalAmount: 5600,
