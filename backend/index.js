@@ -1,6 +1,7 @@
 import '@babel/polyfill';
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import mealRoutes from './routes/meal.route';
 import menuRoutes from './routes/menu.route';
@@ -11,6 +12,7 @@ import validator from './middlewares/validator-middleware';
 const app = express();
 const PORT = process.env.PORT || 9001;
 
+app.use(cors('*'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(validator());
