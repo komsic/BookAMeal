@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const now = new Date();
-export default {
+module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert('Users', [
     {
       name: 'The Three Broomstick',
